@@ -15,7 +15,7 @@ public class DealershipFileManager {
     private  static final String FILE_NAME = "inventory.csv";
     private static final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-    public static void loadDealershipFile(String fileName){
+    public static void getDealership(String fileName){
         try{
             File dataFile = new File(fileName);
             if(dataFile.createNewFile()){
@@ -54,7 +54,9 @@ public class DealershipFileManager {
             }catch (IOException e){
             System.err.print("Something went wrong " + e.getMessage());
         }
+    }//get Dealership file
 
+    public static void saveDealership(String fileName){
 
     }
 
