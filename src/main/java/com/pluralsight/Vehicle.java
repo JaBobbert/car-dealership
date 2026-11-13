@@ -25,7 +25,7 @@ public class Vehicle {
     private BigDecimal price;
 
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, BigDecimal price){
+    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, BigDecimal price) {
         this.vin = vin;
         this.year = year;
         this.make = make;
