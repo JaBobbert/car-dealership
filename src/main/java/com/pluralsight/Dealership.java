@@ -75,17 +75,17 @@ public class Dealership {
     public static void getVehicleByType(String vehicleType){
 
     }
-    public static void getAllVehicle(){
+    public static void getAllVehicles(){
         for (Vehicle cars : inventory) {
             System.out.println(cars);
         }
 
     }
     public static void addVehicle(Vehicle vehicle){
-
+        inventory.add(vehicle);
     }
     public static void removeVehicle(Vehicle vehicle){
-
+        inventory.remove(vehicle);
     }
 
 }

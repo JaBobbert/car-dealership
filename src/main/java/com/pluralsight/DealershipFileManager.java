@@ -15,48 +15,82 @@ public class DealershipFileManager {
     private  static final String FILE_NAME = "inventory.csv";
     private static final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-    public Dealership getDealership(String fileName){
-        try{
+
+    public Dealership getDealership(String fileName) {
+
+        try {
             File dataFile = new File(fileName);
-            if(dataFile.createNewFile()){
+
+            if (dataFile.createNewFile()) {
                 System.out.println("Creating new data file: " + fileName);
             }
+
             BufferedReader reader = new BufferedReader(new FileReader(dataFile));
-            String line;
-            while ((line = reader.readLine()) != null){
-                if(line.trim().isEmpty()){
+
+            // Read dealership information
+            String line = reader.readLine();
+
+            if (line == null) {
+                reader.close();
+                return null;
+            }
+
+            String[] parts = line.split("\\|");
+
+            if (parts.length != 3) {
+                reader.close();
+                return null;
+            }
+
+            String name = parts[0];
+            String address = parts[1];
+            String phone = parts[2];
+
+            Dealership dealership = new Dealership(name, address, phone);
+
+            // Read vehicle information
+            while ((line = reader.readLine()) != null) {
+
+                if (line.trim().isEmpty()) {
                     continue;
                 }
-                try{
-                    String[] parts = line.split("\\|");
 
-                    if (parts.length != 8){
-                        System.out.println("Skipping line: " + line);
+                try {
+                    String[] carParts = line.split("\\|");
+
+                    if (carParts.length != 8) {
+                        System.out.println("Skipping bad line: " + line);
                         continue;
                     }
 
-                    int vin = Integer.parseInt(parts[0]);
-                    int year = Integer.parseInt(parts[1]);
-                    String make = parts[2];
-                    String model = parts[3];
-                    String vehicleType = parts[4];
-                    String color = parts[5];
-                    int odometer = Integer.parseInt(parts[6]);
-                    BigDecimal price = new BigDecimal(parts[7]);
+                    int vin = Integer.parseInt(carParts[0]);
+                    int year = Integer.parseInt(carParts[1]);
+                    String make = carParts[2];
+                    String model = carParts[3];
+                    String vehicleType = carParts[4];
+                    String color = carParts[5];
+                    int odometer = Integer.parseInt(carParts[6]);
+                    BigDecimal price = new BigDecimal(carParts[7]);
 
                     Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
-                    vehicles.add(vehicle);
+
+                    dealership.addVehicle(vehicle);
+
                 } catch (Exception e) {
-                    System.out.println("Skipping bad line " + line);
+                    System.out.println("Skipping bad line: " + line);
                 }
-                reader.close();
             }
-            }catch (IOException e){
-            System.err.print("Something went wrong " + e.getMessage());
+
+            reader.close();
+
+            return dealership;
+
+        } catch (IOException e) {
+            System.err.println("Something went wrong: " + e.getMessage());
             return null;
         }
-        return getDealership(fileName);
-    }//get Dealership file
+    }
+//get Dealership file
 
     public static void saveDealership(String fileName){
 
