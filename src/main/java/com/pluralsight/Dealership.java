@@ -25,7 +25,7 @@ public class Dealership {
     private String address;
     private String phone;
 
-    ArrayList<Vehicle> inventory = new ArrayList<>();
+     public static final ArrayList<Vehicle> inventory = new ArrayList<>();
 
     public Dealership(String name, String address, String phone){
         this.name = name;
@@ -56,4 +56,36 @@ public class Dealership {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public static void getVehicleByPrice(double min, double max){
+
+    }
+    public static void getVehicleByMakeModel(String make, String model){
+
+    }
+    public static void getVehicleByYear(double min, double max){
+
+    }
+    public static void getVehicleByColor(String color){
+
+    }
+    public static void getVehicleByMilage(String make, String model){
+
+    }
+    public static void getVehicleByType(String vehicleType){
+
+    }
+    public static void getAllVehicle(){
+        for (Vehicle cars : inventory) {
+            System.out.println(cars);
+        }
+
+    }
+    public static void addVehicle(Vehicle vehicle){
+
+    }
+    public static void removeVehicle(Vehicle vehicle){
+
+    }
+
 }
