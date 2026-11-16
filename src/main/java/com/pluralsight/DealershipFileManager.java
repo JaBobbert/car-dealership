@@ -12,11 +12,13 @@ getDealership - Pulls up stored files of dealership
 saveDealership - saves data to a file from the dealership
  */
 public class DealershipFileManager {
-    private  static final String FILE_NAME = "inventory.csv";
+    private static final String FILE_NAME = "inventory.csv";
     private static final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 
     public Dealership getDealership(String fileName) {
+
+        Dealership dealership = null;
 
         try {
             File dataFile = new File(fileName);
@@ -46,7 +48,7 @@ public class DealershipFileManager {
             String address = parts[1];
             String phone = parts[2];
 
-            Dealership dealership = new Dealership(name, address, phone);
+            dealership = new Dealership(name, address, phone);
 
             // Read vehicle information
             while ((line = reader.readLine()) != null) {
@@ -56,23 +58,26 @@ public class DealershipFileManager {
                 }
 
                 try {
-                    String[] carParts = line.split("\\|");
+                    String[] vehicleParts = line.split("\\|");
 
-                    if (carParts.length != 8) {
+                    if (vehicleParts.length != 8) {
                         System.out.println("Skipping bad line: " + line);
                         continue;
                     }
 
-                    int vin = Integer.parseInt(carParts[0]);
-                    int year = Integer.parseInt(carParts[1]);
-                    String make = carParts[2];
-                    String model = carParts[3];
-                    String vehicleType = carParts[4];
-                    String color = carParts[5];
-                    int odometer = Integer.parseInt(carParts[6]);
-                    BigDecimal price = new BigDecimal(carParts[7]);
+                    int vin = Integer.parseInt(vehicleParts[0]);
+                    int year = Integer.parseInt(vehicleParts[1]);
+                    String make = vehicleParts[2];
+                    String model = vehicleParts[3];
+                    String vehicleType = vehicleParts[4];
+                    String color = vehicleParts[5];
+                    int odometer = Integer.parseInt(vehicleParts[6]);
+                    BigDecimal price = new BigDecimal(vehicleParts[7]);
 
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
+                    Vehicle vehicle = new Vehicle(
+                            vin, year, make, model,
+                            vehicleType, color, odometer, price
+                    );
 
                     dealership.addVehicle(vehicle);
 
@@ -83,14 +88,13 @@ public class DealershipFileManager {
 
             reader.close();
 
-            return dealership;
-
         } catch (IOException e) {
             System.err.println("Something went wrong: " + e.getMessage());
             return null;
         }
-    }
-//get Dealership file
+
+        return dealership;
+    }//get Dealership file
 
     public static void saveDealership(String fileName){
 
