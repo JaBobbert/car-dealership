@@ -100,28 +100,29 @@ public class UserInterface {
     }//Should call to Dealership which prints out all vehicles
 
     public void getByPrice(){
-        dealership.
+        dealership.getVehicleByPrice();
 
     }
     public void getByMakeModel(){
+        dealership.getVehicleByMakeModel();
 
     }
     public void getByYear(){
-
+        dealership.getVehicleByYear();
     }
     public void getByColor(){
-
+        dealership.getVehicleByColor();
     }
     public void getByMilage(){
-
+        dealership.getVehicleByMileage();
     }
     public void getByVehicleType(){
-
+        dealership.getVehicleByType();
     }
     public void addVehicle(){
-
+        dealership.addVehicle();
     }
     public void removeVehicle(){
-
+        dealership.removeVehicle();
     }
 }

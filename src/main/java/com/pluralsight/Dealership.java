@@ -61,11 +61,11 @@ public class Dealership {
         this.phone = phone;
     }
 
-    public static void getVehicleByPrice(double min, double max){
+    public static void getVehicleByPrice(){
         System.out.println("What is the minimum $");
-        min = scanner.nextDouble();
+        double min = scanner.nextDouble();
         System.out.println("What is the maximum $");
-        max = scanner.nextDouble();
+        double max = scanner.nextDouble();
         scanner.nextLine();
 
 
@@ -73,23 +73,23 @@ public class Dealership {
             System.out.println(vehicle);
         }
 
-    }
-    public static void getVehicleByMakeModel(String make, String model, Scanner scanner){
+    }//took out the () because it would ask for it to be placed into a different code
+    public static void getVehicleByMakeModel(){
         System.out.println("What make is the vehicle?");
-        make = scanner.nextLine();
+        String make = scanner.nextLine();
         System.out.println("What model is the vehicle?");
-        model = scanner.nextLine();
+        String model = scanner.nextLine();
 
         if (vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model)){
             System.out.println(vehicle);
         }
 
     }
-    public static void getVehicleByYear(int min, int max){
+    public static void getVehicleByYear(){
         System.out.println("What year to start with?");
-        min = scanner.nextInt();
+        int min = scanner.nextInt();
         System.out.println("What year to end with?");
-        max = scanner.nextInt();
+        int max = scanner.nextInt();
         scanner.nextLine();
 
 
@@ -97,20 +97,20 @@ public class Dealership {
             System.out.println(vehicle);
         }
     }
-    public static void getVehicleByColor(String color){
+    public static void getVehicleByColor(){
         System.out.println("What color vehicle are you picking?");
-        color = scanner.nextLine();
+        String color = scanner.nextLine();
         if (vehicle.getColor().equalsIgnoreCase(color)) {
             System.out.println(vehicle);
         }
 
 
     }
-    public static void getVehicleByMileage(int min, int max){
+    public static void getVehicleByMileage(){
         System.out.println("What is the minimum mileage?");
-        min = scanner.nextInt();
+        int min = scanner.nextInt();
         System.out.println("What is the maximum mileage?");
-        max = scanner.nextInt();
+        int max = scanner.nextInt();
         scanner.nextLine();
 
 
@@ -118,9 +118,9 @@ public class Dealership {
             System.out.println(vehicle);
         }
     }
-    public static void getVehicleByType(String vehicleType){
+    public static void getVehicleByType(){
         System.out.println("What vehicle type is it?(SUV, Car...etc)");
-        vehicleType = scanner.nextLine();
+        String vehicleType = scanner.nextLine();
 
         if (vehicle.getVehicleType().equalsIgnoreCase(vehicleType)){
             System.out.println(vehicleType);
@@ -133,7 +133,7 @@ public class Dealership {
         }
 
     }
-    public static void addVehicle(Vehicle vehicle){
+    public static void addVehicle(){
         System.out.print("What is the vin number? ");
         int vin = scanner.nextInt();
         System.out.print("What year is this vehicle? ");
@@ -153,11 +153,11 @@ public class Dealership {
         System.out.print("What is the price? $");
         BigDecimal price = scanner.nextBigDecimal();
 
-        vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
+        Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
         inventory.add(vehicle);
         System.out.println("Successfully added.");
     }
-    public static void removeVehicle(Vehicle vehicle){
+    public static void removeVehicle(){
         System.out.print("What is the vin number? ");
         int vin = scanner.nextInt();
         System.out.print("What year is this vehicle? ");
