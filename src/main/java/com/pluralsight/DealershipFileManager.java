@@ -1,9 +1,6 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -14,17 +11,16 @@ saveDealership - saves data to a file from the dealership
 public class DealershipFileManager {
     private static final String FILE_NAME = "inventory.csv";
     private static final ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private static Dealership dealership;
+    public Dealership getDealership() {
 
-
-    public Dealership getDealership(String fileName) {
-
-        Dealership dealership = null;
+         dealership = null;
 
         try {
-            File dataFile = new File(fileName);
+            File dataFile = new File(FILE_NAME);
 
             if (dataFile.createNewFile()) {
-                System.out.println("Creating new data file: " + fileName);
+                System.out.println("Creating new data file: " + FILE_NAME);
             }
 
             BufferedReader reader = new BufferedReader(new FileReader(dataFile));
@@ -96,8 +92,25 @@ public class DealershipFileManager {
         return dealership;
     }//get Dealership file
 
-    public static void saveDealership(String fileName){
+    public void saveDealership(){
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME));
+            writer.write(dealership.getName() + "   |   " + dealership.getAddress() +  "   |   " + dealership.getPhone());
 
-    }
+            writer.newLine();
+
+            for (Vehicle vehicle : vehicles) {
+                writer.write(vehicle.getVin() + "   |   " + vehicle.getYear() + "   |   " + vehicle.getMake()
+                        + "   |   " + vehicle.getModel() + "   |   " + vehicle.getVehicleType()
+                        + "   |   " + vehicle.getColor() + "   |   " + vehicle.getOdometer() + "   |   " + vehicle.getPrice());
+                writer.newLine();
+
+            }
+
+            writer.close();
+        } catch (IOException e){
+            System.err.println("Something went wrong. " + e.getMessage());
+        }
+    }//Save to dealership file by rewriting it
 
 }

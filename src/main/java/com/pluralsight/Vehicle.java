@@ -25,6 +25,7 @@ public class Vehicle {
     private BigDecimal price;
 
 
+
     public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, BigDecimal price) {
         this.vin = vin;
         this.year = year;
@@ -36,35 +37,35 @@ public class Vehicle {
         this.price = price;
     }
 
-    public int vin() {
+    public int getVin() {
         return vin;
     }
 
-    public int year() {
+    public int getYear() {
         return year;
     }
 
-    public String make() {
+    public String getMake() {
         return make;
     }
 
-    public String model() {
+    public String getModel() {
         return model;
     }
 
-    public String vehicleType() {
+    public String getVehicleType() {
         return vehicleType;
     }
 
-    public String color() {
+    public String getColor() {
         return color;
     }
 
-    public int odometer() {
+    public int getOdometer() {
         return odometer;
     }
 
-    public BigDecimal price() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -102,6 +103,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return vin + " | " + year + " | " + make + " | " + model + " | " + vehicleType + " | " + color + " | " + odometer + " | $" + price;
+        return vin + "   |   " + year + "   |   " + make + "   |   " + model + "   |   " + vehicleType + "   |   " + color + "   |   " + odometer + "   |   $" + price;
     }
 }

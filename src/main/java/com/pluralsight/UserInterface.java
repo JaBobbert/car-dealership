@@ -27,6 +27,7 @@ public class UserInterface {
         init();
 
         while(true){
+            System.out.println(dealership.toString());
             System.out.println("\n Dealership Menu");
             System.out.println("1 - Find vehicles by price");
             System.out.println("2 - Find vehicles by make/model");
@@ -91,7 +92,7 @@ public class UserInterface {
 
     private void init(){
         DealershipFileManager files = new DealershipFileManager();
-        this.dealership = files.getDealership("inventory.csv");
+        this.dealership = files.getDealership();
     }//Opens the file from the file manager in the other class
 
     public void displayAllVehicles(){
@@ -99,6 +100,7 @@ public class UserInterface {
     }//Should call to Dealership which prints out all vehicles
 
     public void getByPrice(){
+        dealership.
 
     }
     public void getByMakeModel(){
