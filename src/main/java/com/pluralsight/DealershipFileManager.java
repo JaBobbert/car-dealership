@@ -8,13 +8,12 @@ import java.util.ArrayList;
 getDealership - Pulls up stored files of dealership
 saveDealership - saves data to a file from the dealership
  */
-public class DealershipFileManager {
-    private static final String FILE_NAME = "inventory.csv";
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private static Dealership dealership;
-    public Dealership getDealership() {
 
-         dealership = null;
+public class DealershipFileManager {
+
+    private static final String FILE_NAME = "inventory.csv";
+
+    public Dealership getDealership() {
 
         try {
             File dataFile = new File(FILE_NAME);
@@ -23,93 +22,109 @@ public class DealershipFileManager {
                 System.out.println("Creating new data file: " + FILE_NAME);
             }
 
-            BufferedReader reader = new BufferedReader(new FileReader(dataFile));
+            try (BufferedReader reader = new BufferedReader(new FileReader(dataFile))) {
 
-            // Read dealership information
-            String line = reader.readLine();
+                String line = reader.readLine();
 
-            if (line == null) {
-                reader.close();
-                return null;
-            }
-
-            String[] parts = line.split("\\|");
-
-            if (parts.length != 3) {
-                reader.close();
-                return null;
-            }
-
-            String name = parts[0];
-            String address = parts[1];
-            String phone = parts[2];
-
-            dealership = new Dealership(name, address, phone);
-
-            // Read vehicle information
-            while ((line = reader.readLine()) != null) {
-
-                if (line.trim().isEmpty()) {
-                    continue;
+                if (line == null) {
+                    return null;
                 }
 
-                try {
-                    String[] vehicleParts = line.split("\\|");
+                String[] parts = line.split("\\|", -1);
 
-                    if (vehicleParts.length != 8) {
-                        System.out.println("Skipping bad line: " + line);
+                if (parts.length != 3) {
+                    System.out.println("Invalid dealership information.");
+                    return null;
+                }
+
+                String name = parts[0].trim();
+                String address = parts[1].trim();
+                String phone = parts[2].trim();
+
+                Dealership dealership = new Dealership(name, address, phone);
+
+                while ((line = reader.readLine()) != null) {
+
+                    if (line.trim().isEmpty()) {
                         continue;
                     }
 
-                    int vin = Integer.parseInt(vehicleParts[0]);
-                    int year = Integer.parseInt(vehicleParts[1]);
-                    String make = vehicleParts[2];
-                    String model = vehicleParts[3];
-                    String vehicleType = vehicleParts[4];
-                    String color = vehicleParts[5];
-                    int odometer = Integer.parseInt(vehicleParts[6]);
-                    BigDecimal price = new BigDecimal(vehicleParts[7]);
+                    try {
+                        String[] vehicleParts = line.split("\\|", -1);
 
-                     Vehicle vehicle = new Vehicle(
-                            vin, year, make, model,
-                            vehicleType, color, odometer, price);
+                        if (vehicleParts.length != 8) {
+                            System.out.println("Skipping bad line: " + line);
+                            continue;
+                        }
 
-                     dealership.addVehicle(vehicle);
+                        int vin = Integer.parseInt(vehicleParts[0].trim());
+                        int year = Integer.parseInt(vehicleParts[1].trim());
+                        String make = vehicleParts[2].trim();
+                        String model = vehicleParts[3].trim();
+                        String vehicleType = vehicleParts[4].trim();
+                        String color = vehicleParts[5].trim();
+                        int odometer = Integer.parseInt(vehicleParts[6].trim());
+                        BigDecimal price = new BigDecimal(vehicleParts[7].trim());
 
-                } catch (Exception e) {
-                    System.out.println("Skipping bad line: " + line);
+                        Vehicle vehicle = new Vehicle(
+                                vin, year, make, model,
+                                vehicleType, color, odometer, price
+                        );
+
+                        dealership.addVehicle(vehicle);
+
+                    } catch (Exception e) {
+                        System.out.println("Could not read vehicle: " + line);
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
+
+                System.out.println("Vehicles loaded: " +
+                        dealership.getAllVehicles().size());
+
+                return dealership;
             }
 
-            reader.close();
-
         } catch (IOException e) {
-            System.err.println("Something went wrong: " + e.getMessage());
+            System.out.println("Something went wrong: " + e.getMessage());
             return null;
         }
+    }
 
-        return dealership;
-    }//get Dealership file
+    public void saveDealership(Dealership dealership) {
 
-    public void saveDealership(){
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME));
-            writer.write(dealership.getName() + "   |   " + dealership.getAddress() +  "   |   " + dealership.getPhone());
+        if (dealership == null) {
+            System.out.println("No dealership information to save.");
+            return;
+        }
+
+        try (BufferedWriter writer =
+                     new BufferedWriter(new FileWriter(FILE_NAME))) {
+
+            writer.write(dealership.getName() + "|" +
+                    dealership.getAddress() + "|" +
+                    dealership.getPhone());
 
             writer.newLine();
 
-            for (Vehicle vehicle : vehicles) {
-                writer.write(vehicle.getVin() + "   |   " + vehicle.getYear() + "   |   " + vehicle.getMake()
-                        + "   |   " + vehicle.getModel() + "   |   " + vehicle.getVehicleType()
-                        + "   |   " + vehicle.getColor() + "   |   " + vehicle.getOdometer() + "   |   " + vehicle.getPrice());
-                writer.newLine();
+            for (Vehicle vehicle : dealership.getAllVehicles()) {
 
+                writer.write(vehicle.getVin() + "|" +
+                        vehicle.getYear() + "|" +
+                        vehicle.getMake() + "|" +
+                        vehicle.getModel() + "|" +
+                        vehicle.getVehicleType() + "|" +
+                        vehicle.getColor() + "|" +
+                        vehicle.getOdometer() + "|" +
+                        vehicle.getPrice());
+
+                writer.newLine();
             }
 
-            writer.close();
-        } catch (IOException e){
-            System.err.println("Something went wrong. " + e.getMessage());
-        }
-    }//Save to dealership file by rewriting it
+            System.out.println("Dealership saved successfully.");
 
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
 }
