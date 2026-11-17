@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 /*
 name:String
 address:String
@@ -19,24 +22,20 @@ removeVehicle(vehicle)
  */
 
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class Dealership {
+
     private String name;
     private String address;
     private String phone;
+    private ArrayList<Vehicle> inventory;
 
-    private ArrayList<Vehicle> inventory = new ArrayList<>();
-
-    public Dealership(){
-
-    }
-
+    // Constructor
     public Dealership(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
+        this.inventory = new ArrayList<Vehicle>();
     }
 
     public String getName() {
@@ -51,6 +50,7 @@ public class Dealership {
         return phone;
     }
 
+    // Search by price
     public ArrayList<Vehicle> getVehicleByPrice(double min, double max) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -64,6 +64,7 @@ public class Dealership {
         return results;
     }
 
+    // Search by make and model
     public ArrayList<Vehicle> getVehicleByMakeModel(String make, String model) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -77,6 +78,7 @@ public class Dealership {
         return results;
     }
 
+    // Search by year
     public ArrayList<Vehicle> getVehicleByYear(int min, int max) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -89,6 +91,7 @@ public class Dealership {
         return results;
     }
 
+    // Search by color
     public ArrayList<Vehicle> getVehicleByColor(String color) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -101,6 +104,7 @@ public class Dealership {
         return results;
     }
 
+    // Search by mileage
     public ArrayList<Vehicle> getVehicleByMileage(int min, int max) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -114,6 +118,7 @@ public class Dealership {
         return results;
     }
 
+    // Search by vehicle type
     public ArrayList<Vehicle> getVehicleByType(String vehicleType) {
         ArrayList<Vehicle> results = new ArrayList<>();
 
@@ -126,15 +131,18 @@ public class Dealership {
         return results;
     }
 
+    // Return all vehicles
     public ArrayList<Vehicle> getAllVehicles() {
         return inventory;
     }
 
+    // Add vehicle
     public void addVehicle(Vehicle vehicle) {
         inventory.add(vehicle);
         System.out.println("Successfully added.");
     }
 
+    // Remove vehicle
     public void removeVehicle(Vehicle vehicle) {
         inventory.remove(vehicle);
         System.out.println("Successfully removed from the lot.");
@@ -142,6 +150,6 @@ public class Dealership {
 
     @Override
     public String toString() {
-        return name + " | " + address + " | " + phone;
+        return name + "   |   " + address + "   |   " + phone;
     }
 }
