@@ -10,7 +10,7 @@ saveDealership - saves data to a file from the dealership
  */
 public class DealershipFileManager {
     private static final String FILE_NAME = "inventory.csv";
-    private static final ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private ArrayList<Vehicle> vehicles = new ArrayList<>();
     private static Dealership dealership;
     public Dealership getDealership() {
 
@@ -70,12 +70,11 @@ public class DealershipFileManager {
                     int odometer = Integer.parseInt(vehicleParts[6]);
                     BigDecimal price = new BigDecimal(vehicleParts[7]);
 
-                    Vehicle vehicle = new Vehicle(
+                     Vehicle vehicle = new Vehicle(
                             vin, year, make, model,
-                            vehicleType, color, odometer, price
-                    );
+                            vehicleType, color, odometer, price);
 
-                    dealership.addVehicle(vehicle);
+                     dealership.addVehicle(vehicle);
 
                 } catch (Exception e) {
                     System.out.println("Skipping bad line: " + line);

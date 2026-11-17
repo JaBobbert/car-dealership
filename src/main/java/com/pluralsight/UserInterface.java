@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ processRemoveVehicleRequest()
  */
 public class UserInterface {
     private Dealership dealership;
-    private Scanner scan = new Scanner(System.in);
+    private  static Scanner scan = new Scanner(System.in);
 
     public void display(){
         init();
@@ -100,29 +101,96 @@ public class UserInterface {
     }//Should call to Dealership which prints out all vehicles
 
     public void getByPrice(){
-        dealership.getVehicleByPrice();
+        System.out.println("What is the minimum $");
+        double min = scan.nextDouble();
+        System.out.println("What is the maximum $");
+        double max = scan.nextDouble();
+        scan.nextLine();
+        dealership.getVehicleByPrice(min, max);
 
     }
+
     public void getByMakeModel(){
-        dealership.getVehicleByMakeModel();
+        System.out.println("What make is the vehicle?");
+        String make = scan.nextLine();
+        System.out.println("What model is the vehicle?");
+        String model = scan.nextLine();
+        dealership.getVehicleByMakeModel(make, model);
 
     }
     public void getByYear(){
-        dealership.getVehicleByYear();
+        System.out.println("What year to start with?");
+        int min = scan.nextInt();
+        System.out.println("What year to end with?");
+        int max = scan.nextInt();
+        scan.nextLine();
+
+        dealership.getVehicleByYear(min, max);
     }
     public void getByColor(){
-        dealership.getVehicleByColor();
+        System.out.println("What color vehicle are you picking?");
+        String color = scan.nextLine();
+        dealership.getVehicleByColor(color);
     }
     public void getByMilage(){
-        dealership.getVehicleByMileage();
+        System.out.println("What is the minimum mileage?");
+        int min = scan.nextInt();
+        System.out.println("What is the maximum mileage?");
+        int max = scan.nextInt();
+        scan.nextLine();
+        dealership.getVehicleByMileage(min, max);
     }
     public void getByVehicleType(){
-        dealership.getVehicleByType();
+        System.out.println("What vehicle type is it?(SUV, Car...etc)");
+        String vehicleType = scan.nextLine();
+
+        dealership.getVehicleByType(vehicleType);
     }
     public void addVehicle(){
-        dealership.addVehicle();
+        System.out.print("What is the vin number? ");
+        int vin = scan.nextInt();
+        System.out.print("What year is this vehicle? ");
+        int year = scan.nextInt();
+        scan.nextLine();
+        System.out.print("What make is this vehicle? ");
+        String make = scan.nextLine();
+        System.out.print("What model is this vehicle? ");
+        String model = scan.nextLine();
+        System.out.print("What vehicle type is this? ");
+        String vehicleType = scan.nextLine();
+        System.out.print("What color is this vehicle? ");
+        String color = scan.nextLine();
+        System.out.print("What is the mileage? ");
+        int odometer = scan.nextInt();
+        scan.nextLine();
+        System.out.print("What is the price? $");
+        BigDecimal price = scan.nextBigDecimal();
+        scan.nextLine();
+
+        Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
+        dealership.addVehicle(vehicle);
     }
-    public void removeVehicle(){
-        dealership.removeVehicle();
+    public void removeVehicle() {
+
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        System.out.print("What is the vin number? ");
+        int vin = scan.nextInt();
+        scan.nextLine();
+
+        Vehicle vehicleToRemove = null;
+
+        for (Vehicle vehicle : vehicles) {
+
+            if (vehicle.getVin() == vin) {
+                vehicleToRemove = vehicle;
+                break;
+            }
+        }
+
+        if (vehicleToRemove != null) {
+            dealership.removeVehicle(vehicleToRemove);
+        } else {
+            System.out.println("Vehicle not found.");
+        }
     }
 }
