@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -92,8 +91,8 @@ public class UserInterface {
     }//End of Display method
 
     private void init(){
-        DealershipFileManager files = new DealershipFileManager();
-        this.dealership = files.getDealership();
+        DealershipFileManager dealershipFileManager = new DealershipFileManager();
+        dealershipFileManager.getDealership();
     }//Opens the file from the file manager in the other class
 
     public void displayAllVehicles(){
